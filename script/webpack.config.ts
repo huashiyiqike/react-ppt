@@ -51,7 +51,11 @@ const webpackConfig = {
             }
         }),
         new webpack.NoErrorsPlugin(),
-         new LiveReloadPlugin()
+        new LiveReloadPlugin(),
+        // new webpack.DllReferencePlugin({
+        //     context: '.',
+        //     manifest: require(path.join(process.cwd(), 'app/dll/library-mainfest.json'))
+        // })
     ]
 
 }
