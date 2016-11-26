@@ -1,4 +1,4 @@
 import PPT from './PPT';
-import Frame from './Frame';
+import {Frame, List} from './Frame';
 
-export {PPT as ReactPPT, Frame};
+export {PPT as ReactPPT, Frame, List as Lists};

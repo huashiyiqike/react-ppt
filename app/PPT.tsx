@@ -18,7 +18,7 @@ export default class PPT extends React.Component<Iprops, Istates> {
         super(props, context);
         this.state = {
             isPlaying: false,
-            cur: this.props.cur? this.props.cur: 0
+            cur: this.props.cur ? this.props.cur : 0
         }
         // this.setCur = this.setCur.bind(this);
         this.view = this.view.bind(this);
@@ -41,7 +41,11 @@ export default class PPT extends React.Component<Iprops, Istates> {
     }
 
     KeyPressInView = (e: any) => {
+        if (!this.state.isPlaying) {
+            return;
+        }
         switch (e.keyCode) {
+            case 38:
             case 37: this.setState({
                 cur: this.state.cur - 1 < 0 ? 0 : this.state.cur - 1
             }); break;
@@ -59,7 +63,8 @@ export default class PPT extends React.Component<Iprops, Istates> {
     }
 
     Click = (e: any) => {
-        if(!this.state.isPlaying){
+        // console.log('click')
+        if (!this.state.isPlaying) {
             return;
         }
         e.stopPropagation();
@@ -145,7 +150,7 @@ export default class PPT extends React.Component<Iprops, Istates> {
                 divs.map((value, index) => {
                     return <div key={index} onClick={this.setCur.bind(this, index)} className="slider-piece">
                         <div className="dummy" />
-                        <div className="slider-index"> {index+1}</div>
+                        <div className="slider-index"> {index + 1}</div>
                         <div className="slider-value">
                             {value}
                         </div>

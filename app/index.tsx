@@ -1,18 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {ReactPPT, Frame} from './ReactPPT';
+import {ReactPPT, Frame, Lists} from './ReactPPT';
 import './index.less';
 import * as cx from 'classnames';
-class Lists extends React.Component<any, any>{
-    render() {
-        return <div>
-            {this.props.lists.map((value: any, index: number) => {
-                return <li className={cx({ "ul": this.props.header })} key={index}>{value}</li>
-            })}
-            {this.props.children}
-        </div>
-    }
-}
+
 class Wrapper extends React.Component<any, any>{
     render() {
         return <div className="wrapper">
