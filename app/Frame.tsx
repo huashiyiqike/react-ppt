@@ -2,6 +2,8 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { VelocityTransitionGroup, VelocityComponent } from 'velocity-react';
+require('velocity-animate');
+require('velocity-animate/velocity.ui');
 export default class Frame extends React.Component<any, any> {
 
     constructor(props: any, context: any) {
@@ -16,8 +18,8 @@ export default class Frame extends React.Component<any, any> {
                 <VelocityComponent animation={{ opacity: this.state.animate ? 1 : 0 }} runOnMount duration={500}>
                     <div>fdsfsfjkhjjdfsf</div>
                 </VelocityComponent>
-                <VelocityTransitionGroup enter={{ animation: "slideDown" }} leave={{ animation: "slideUp" }}>
-                   <div>transition group</div>
+                <VelocityTransitionGroup runOnMount enter={{ animation: "transition.whirlIn" }} leave={{ animation: "slideUp" }}>
+                    <div>transition group</div>
                 </VelocityTransitionGroup>
             </div>
         );

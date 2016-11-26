@@ -4,7 +4,8 @@ import * as webpack from 'webpack'
 let dllLists =  [
     'react',
     'react-dom',
-    'velocity-react'
+    'velocity-react',
+    'velocity-animate'
 ]
 module.exports = {
     entry: {
@@ -18,7 +19,7 @@ module.exports = {
     },
 
     plugins: [
-        new webpack.DllPlugin({
+        new (webpack as any).DllPlugin({
             path: path.join(__dirname, '../../app/dll', '[name]-mainfest.json'),
             name: '[name]'
         })

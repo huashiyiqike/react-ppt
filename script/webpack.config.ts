@@ -52,7 +52,7 @@ const webpackConfig = {
         }),
         new webpack.NoErrorsPlugin(),
         new LiveReloadPlugin(),
-        new webpack.DllReferencePlugin({
+        new (webpack as any).DllReferencePlugin({
             context: '.',
             manifest: require(path.join(process.cwd(), 'app/dll/library-mainfest.json'))
         })
