@@ -17,12 +17,12 @@ module.exports = {
         library: '[name]'
     },
 
-    // plugins: [
-    //     new webpack.DllPlugin({
-    //         path: path.join(__dirname, '../../app/dll', '[name]-mainfest.json'),
-    //         name: '[name]'
-    //     })
-    // ],
+    plugins: [
+        new webpack.DllPlugin({
+            path: path.join(__dirname, '../../app/dll', '[name]-mainfest.json'),
+            name: '[name]'
+        })
+    ],
 
     module: {
         loaders: [

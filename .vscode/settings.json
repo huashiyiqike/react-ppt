@@ -11,7 +11,7 @@
         "typings": true,
         "yarn.lock": true,
         "node_modules": false,
-        "package.json": true,
+        "package.json": false,
         "tsconfig.json": true,
         "tslint.json": true,
         "*.log*": true

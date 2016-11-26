@@ -12,8 +12,8 @@ const webpackConfig = {
     output: {
         path: path.join(__dirname, "../../app/"),
         publicPath: './',
-        filename: 'bundle.js'
-
+        filename: 'bundle.js',
+        pathinfo: true
     },
 
     module: {
@@ -52,10 +52,10 @@ const webpackConfig = {
         }),
         new webpack.NoErrorsPlugin(),
         new LiveReloadPlugin(),
-        // new webpack.DllReferencePlugin({
-        //     context: '.',
-        //     manifest: require(path.join(process.cwd(), 'app/dll/library-mainfest.json'))
-        // })
+        new webpack.DllReferencePlugin({
+            context: '.',
+            manifest: require(path.join(process.cwd(), 'app/dll/library-mainfest.json'))
+        })
     ]
 
 }

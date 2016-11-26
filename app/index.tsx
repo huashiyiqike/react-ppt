@@ -1,9 +1,8 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import ReactPPT from './ReactPPT';
+import {ReactPPT, Frame} from './ReactPPT';
 import './index.less';
 import * as cx from 'classnames';
-import Frame from './Frame';
 class Lists extends React.Component<any, any>{
     render() {
         return <div>
