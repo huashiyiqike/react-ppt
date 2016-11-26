@@ -1,3 +1,4 @@
+/// <reference path="velocity-react.d.ts" /> 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { VelocityTransitionGroup, VelocityComponent } from 'velocity-react';

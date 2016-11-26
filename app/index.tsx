@@ -91,7 +91,7 @@ let divs: Array<JSX.Element> = [
     </Wrapper>
     ,
 
-    <div>3<div>2</div></div>,
+    <div>3<div>d</div></div>,
     <div>4<div>2</div></div>,
     <div>5<div>2</div></div>,
     <div>1<div>2</div></div>,
