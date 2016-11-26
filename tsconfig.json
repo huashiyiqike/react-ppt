@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "target": "es5",
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "experimentalDecorators": true,
+        "sourceMap": true,
+        "outDir": "lib",
+        "rootDir": ".",
+        "jsx": "react"
+    },
+    "filesGlob": [
+        "*.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "lib",
+        "typings",
+        "built-production"
+    ]
+}

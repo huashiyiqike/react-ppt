@@ -1,0 +1,97 @@
+/**:focus{
+    border: dashed 5px red;
+}*/
+.ppt {
+    height: 100%;
+    width: 100%;
+    over-flow: auto;
+    .view {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+    .slider {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 20%;
+
+        .slider-piece {
+            position: relative;
+            margin: 10px;
+            margin-left: 20px;
+            width: 100%;
+            border: solid 1px gray;
+        }
+        .dummy{
+            margin-top:75%
+        }
+        .slider-value{
+            overflow: hidden;
+            /*transform: scale(0.7);*/
+            zoom:0.249;
+            /*transform-origin: top left;*/
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+        .slider-index {
+            position: absolute;
+            left: -20px;
+            top: 0;
+            color: red;
+        }
+    }
+    .preview {
+        position: fixed;
+        right: 3%;
+        top: 10%;
+        width: 70%;
+        height: 80%;
+        border: solid 1px gray;
+    }
+    [class^=control]{
+        position: fixed;
+        bottom: 2%;
+        right: 5%;
+        width: 15%;
+        height: 5%;
+    }
+    .control {
+        border: solid 1px gray;
+        border-radius: 20px;
+        line-height: 40px;
+        [class^=btn] {
+            display: inline-block;
+            /*border: solid 1px gray;*/
+            width: 20%;
+            height: 80%;
+            margin: 2%;
+            text-align: center;
+            font-size: 40px;
+            font-weight: 900;
+            line-height: 40px;
+            color: dodgerblue;
+            &:hover{
+                transform: scale(1.2, 1.2);
+                transition: all 0.2s ease-in-out;
+                cursor: pointer;
+            }
+        }
+    }
+    .control-play {
+        div {
+            opacity: 0;
+            transition: all 0.5s ease-in-out;
+        }
+        &:hover div {
+            opacity: 1;
+            transition: all 0.5s ease-in-out;
+        }
+    }
+}
