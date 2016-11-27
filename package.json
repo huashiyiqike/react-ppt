@@ -7,7 +7,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "dll": "./node_modules/webpack/bin/webpack.js --display-error-details --config ./lib/script/webpack.dll.config.js -w",
         "dev": "./node_modules/webpack/bin/webpack.js --display-error-details -w --config ./lib/script/webpack.config.js",
-        "start": " node ../lib/script/server.js"
+        "start": " node lib/script/server.js"
     },
     "author": "lyuqi",
     "license": "ISC",
