@@ -10,7 +10,6 @@ var server = new http.Server(app);
 var dll = fs.readFileSync('app/dll/library.dll.js', {
     encoding: 'utf-8'
 });
-console.log(dll)
 app.get('/dll/library.dll.js', function(req, res) {
     res.status(200).send(dll);
 });
