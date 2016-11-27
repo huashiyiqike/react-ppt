@@ -84,7 +84,7 @@ export const Frame2 = () => (Target: any) => {
     return func()
 }
 
-@inject('currentCount') @observer
+@inject('Store') @observer
 export class Frame3 extends React.Component<any, any>{
     constructor(props: any, context: any) {
         super(props, context);
@@ -116,17 +116,16 @@ export class Frame3 extends React.Component<any, any>{
 
     render() {
         console.log(this.props.order);
-        console.log(this.props.currentCount)
-        return <div order={this.props.order}
-                count={this.props.count}>
+        console.log(this.props.Store.currentCount)
+        return <div count={this.props.count}>
         <VelocityTransitionGroup
-            {...this.props.currentCount >= this.props.order ? {
+            {...this.props.Store.currentCount >= this.props.order ? {
                 enter: { animation: "transition.fadeIn", stagger: 600, drag: true },
                 runOnMount: true,
                
             } : {}} >
             {this.props.children}
-              <VelocityComponent animation={{ opacity:this.props.currentCount >= this.props.order ? 1 : 0 }}  duration={500}>
+              <VelocityComponent animation={{ opacity:this.props.Store.currentCount >= this.props.order ? 1 : 0 }}  duration={500}>
                     <div>fdsfsfjkhjjdfsf</div>
                 </VelocityComponent>
         </VelocityTransitionGroup>

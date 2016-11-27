@@ -1,7 +1,17 @@
 import PPT from './PPT';
 import * as React from 'react'
 import { Frame, Frame2, Frame3, List } from './Frame';
-import { Provider } from 'mobx-react'
+import { Provider } from 'mobx-react';
+import {observable, action} from 'mobx'
+
+class Store{
+    @observable
+    currentCount = 0;
+    @action
+    setCount(num:number){
+        this.currentCount = num;
+    }
+}
 
 export default class ReactPPT extends React.Component<any, any> {
     constructor(props:any){
@@ -9,7 +19,7 @@ export default class ReactPPT extends React.Component<any, any> {
     }
     render() {
         return (
-            <Provider frame={{count:0}}>
+            <Provider Store={new Store()}>
                 <PPT {...this.props}>
                     {this.props.children}
                 </PPT>
