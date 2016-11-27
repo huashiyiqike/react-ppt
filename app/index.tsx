@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {ReactPPT, Frame, Lists} from './ReactPPT';
+import { ReactPPT, Frame, Lists, Frame2, Frame3 } from './ReactPPT';
 import './index.less';
 import * as cx from 'classnames';
 
@@ -17,6 +17,7 @@ class Wrapper extends React.Component<any, any>{
 
 
 let divs: Array<JSX.Element> = [
+    <Frame>
     <div key={1} className="wrapper">
         <div className="title">
             基于深度学习的时间序列建模</div>
@@ -28,7 +29,8 @@ let divs: Array<JSX.Element> = [
             清华大学信息科学与技术国家实验室<br />
             2016年12月<br />
         </div>
-    </div>,
+    </div>
+    </Frame>,
 
     <Wrapper key={2} header={"提纲"}>
         <ul className="list">
@@ -64,24 +66,27 @@ let divs: Array<JSX.Element> = [
             <Lists header lists={["论文主要工作与贡献总结"]} />
         </ul>
     </Wrapper>,
-
-    <Wrapper key={5} header={"长时短时记忆模型"}>
-        <ul className="list">
-            <Lists header lists={["简介", "结构", "训练方法", "优化"]}>
-            </Lists>
-        </ul>
-    </Wrapper>,
+        <Wrapper key={5} header={"长时短时记忆模型"}>
+            <ul className="list">
+                <Lists header lists={["简介", "结构", "训练方法", "优化"]}>
+                </Lists>
+            </ul>
+        </Wrapper>
+    ,
     <Wrapper key={6} header={"受限玻尔兹曼机"}>
         <ul className="list">
-                <Lists header lists={["简介", "结构", "训练方法"]}>
-                </Lists>
-            <Frame>
-            </Frame>
+            <Lists header lists={["简介", "结构", "训练方法"]}>
+            </Lists>
         </ul>
     </Wrapper>
-    ,
 
-    <div>3<div>d</div></div>,
+    ,
+    <Frame key={7}>
+    <div>fdsf</div>
+    </Frame>,
+    <Frame3 key={8}>
+    <div>3<div>d</div></div>
+    </Frame3>,
     <div>4<div>2</div></div>,
     <div>5<div>2</div></div>,
     <div>1<div>2</div></div>,
@@ -100,4 +105,4 @@ let divs: Array<JSX.Element> = [
 
 ]
 
-ReactDOM.render(<ReactPPT content={divs} cur={5} />, document.querySelector('#content'));
+ReactDOM.render(<ReactPPT content={divs} cur={7} />, document.querySelector('#content'));
