@@ -84,7 +84,7 @@ let divs: Array<JSX.Element> = [
     <Frame key={7}>
     <div>fdsf</div>
     </Frame>,
-    <Frame3 key={8}>
+    <Frame3 count={1} key={8} order={1} animate={{animation:"transition.fadeIn"}} >
     <div>3<div>d</div></div>
     </Frame3>,
     <div>4<div>2</div></div>,

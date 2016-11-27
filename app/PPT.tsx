@@ -2,18 +2,26 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as cx from 'classnames';
 import './ReactPPT.less';
+import { observer, inject, Provider } from 'mobx-react';
+import { observable } from 'mobx'
+
 export interface Iprops {
 
     content: Array<JSX.Element>;
     cur?: number;
+
 }
 
 export interface Istates {
     isPlaying?: boolean;
     cur?: number;
+    frameCount?: number;
+    currentCount?: number;
 }
+@observer
 export default class PPT extends React.Component<Iprops, Istates> {
-
+    @observable
+    currentCount = 0;
     constructor(props: any, context: any) {
         super(props, context);
         this.state = {
@@ -22,6 +30,7 @@ export default class PPT extends React.Component<Iprops, Istates> {
         }
         // this.setCur = this.setCur.bind(this);
         this.view = this.view.bind(this);
+
     }
 
     componentDidUpdate() {
@@ -31,12 +40,14 @@ export default class PPT extends React.Component<Iprops, Istates> {
     }
     render() {
         return (
-            <div className="ppt">
-                {this.slider(this.props.content, this.state.isPlaying)}
-                {!this.state.isPlaying && this.preview(this.props.content[this.state.cur])}
-                {this.view(this.state.isPlaying)}
-                {this.control()}
-            </div>
+            <Provider currentCount={this.currentCount}>
+                <div className="ppt">
+                    {this.slider(this.props.content, this.state.isPlaying)}
+                    {!this.state.isPlaying && this.preview(this.props.content[this.state.cur])}
+                    {this.view(this.state.isPlaying)}
+                    {this.control()}
+                </div>
+            </Provider>
         );
     }
 
@@ -46,18 +57,41 @@ export default class PPT extends React.Component<Iprops, Istates> {
         }
         switch (e.keyCode) {
             case 38:
-            case 37: this.setState({
-                cur: this.state.cur - 1 < 0 ? 0 : this.state.cur - 1
-            }); break;
+            case 37:
+                if (this.currentCount > 0) {
+                    this.currentCount -= 1;
+                } else {
+                    this.setState({
+                        cur: this.state.cur - 1 < 0 ? 0 : this.state.cur - 1
+                    });
+                }
+                break;
             case 27: this.setState({
                 isPlaying: false
             }); break;
             default: {
-                let finish: boolean = this.state.cur >= this.props.content.length - 1
-                this.setState({
-                    isPlaying: finish ? false : true,
-                    cur: finish ? this.state.cur : this.state.cur + 1
-                })
+                let finish: boolean = this.state.cur >= this.props.content.length - 1 && this.currentCount >= this.state.frameCount
+                if (finish) {
+                    this.setState({
+                        isPlaying: false
+                    })
+                } else {
+                    if (this.currentCount < this.state.frameCount) {
+                        console.log(this.currentCount)
+                        this.currentCount += 1;
+                    } else {
+
+                        this.state.frameCount = this.props.content[this.state.cur + 1].props && this.props.content[this.state.cur + 1].props.count;
+                        if (this.state.frameCount == undefined) {
+                            this.state.frameCount = 0;
+                        }
+                        this.currentCount = 0;
+                        this.setState({
+                            cur: this.state.cur + 1
+                        })
+                    }
+                }
+
             }
         }
     }
@@ -68,11 +102,20 @@ export default class PPT extends React.Component<Iprops, Istates> {
             return;
         }
         e.stopPropagation();
-        let finish: boolean = this.state.cur >= this.props.content.length - 1
-        this.setState({
-            isPlaying: finish ? false : true,
-            cur: finish ? this.state.cur : this.state.cur + 1
-        })
+        let finish: boolean = this.state.cur >= this.props.content.length - 1 && this.currentCount >= this.state.frameCount
+        if (finish) {
+            this.setState({
+                isPlaying: false
+            })
+        } else {
+            if (this.currentCount < this.state.frameCount) {
+                this.currentCount += 1;
+            } else {
+                this.setState({
+                    cur: this.state.cur + 1
+                })
+            }
+        }
     }
     view = (show: boolean) => {
         let {content} = this.props;

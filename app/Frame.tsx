@@ -5,25 +5,27 @@ import * as cx from 'classnames';
 import { VelocityTransitionGroup, VelocityComponent } from 'velocity-react';
 require('velocity-animate');
 require('velocity-animate/velocity.ui');
-// export class Frame extends React.Component<any, any> {
+import { observer,inject } from 'mobx-react'
 
-//     constructor(props: any, context: any) {
-//         super(props, context);
-//         this.state = {
-//             animate: false,
-//             count: this.props.count
-//         }
-//     }
-//     render() {
-//         return (
-//             <div onClick={() => { this.setState({ animate: true }); console.log('clicked') } }>
-//                 <VelocityComponent animation={{ opacity: this.state.animate ? 1 : 0 }} runOnMount duration={500}>
-//                     <div>fdsfsfjkhjjdfsf</div>
-//                 </VelocityComponent>
-//             </div>
-//         );
-//     }
-// }
+export class Frame extends React.Component<any, any> {
+
+    constructor(props: any, context: any) {
+        super(props, context);
+        this.state = {
+            animate: false,
+            count: this.props.count
+        }
+    }
+    render() {
+        return (
+            <div onClick={() => { this.setState({ animate: true }); console.log('clicked') } }>
+                <VelocityComponent animation={{ opacity: this.state.animate ? 1 : 0 }} runOnMount duration={500}>
+                    <div>fdsfsfjkhjjdfsf</div>
+                </VelocityComponent>
+            </div>
+        );
+    }
+}
 
 export const Frame2 = () => (Target: any) => {
     class Inner extends React.Component<any, any>{
@@ -38,12 +40,13 @@ export const Frame2 = () => (Target: any) => {
         private wrappedInstance: React.ReactInstance;
 
         myTurnToAnimate = (num: number) => {
-            return this.state.numAnimationLeft == num
+            return true;
+            // return this.state.numAnimationLeft == num
         }
 
-        process = (elem: JSX.Element) => {
+        process = (elem: JSX.Element, children: any) => {
             if (!elem || !elem.props) {
-                return elem;
+                return children;
             }
 
             if (elem.props.animate) {
@@ -61,27 +64,16 @@ export const Frame2 = () => (Target: any) => {
                         duration: elem.props.duration ? elem.props.duration : 500,
                         runOnMount: false
                     } : {}} >
-                    {
-                        React.createElement(
-                            elem.type as any,
-                            newProps,
-                            Frame2()(React.createElement(elem.props.children))
-                        )
-                    }
+                    {children}
                 </VelocityComponent>
             } else {
-                return React.createElement(
-                    (Frame2()(React.createElement(elem.props.children)) as any
-                    )
-                )
-
+                return elem;
             }
         }
 
-        public render():React.ReactElement<any> {
+        public render(): React.ReactElement<any> {
             console.log(Target)
-            return React.cloneElement(Target.type, {}, this.props.children)
-            // return React.createElement(this.renderWithAnimation(Target) as any)
+            return React.createElement(Target, {}, this.process(Target, this.props.children))
         }
     }
 
@@ -92,169 +84,58 @@ export const Frame2 = () => (Target: any) => {
     return func()
 }
 
-@Frame2()
+@inject('currentCount') @observer
 export class Frame3 extends React.Component<any, any>{
     constructor(props: any, context: any) {
         super(props, context);
     }
-    render(){
-        return <div>
+ 
+  componentWillReceiveProps(nextProps:any){
+      console.log(nextProps);
+  } 
+
+    // handleKepPress = (e: any) => {
+    //     switch (e.keyCode) {
+    //         case 38:
+    //         case 37: this.setState({
+    //             cur: this.state.cur - 1 < 0 ? 0 : this.state.cur - 1
+    //         }); break;
+    //         case 27: this.setState({
+    //             isPlaying: false
+    //         }); break;
+    //         default: {
+    //             let finish: boolean = this.state.cur >= this.props.content.length - 1
+    //             this.setState({
+    //                 isPlaying: finish ? false : true,
+    //                 cur: finish ? this.state.cur : this.state.cur + 1
+    //             })
+    //         }
+    //     }
+
+    // }
+
+    render() {
+        console.log(this.props.order);
+        console.log(this.props.currentCount)
+        return <div order={this.props.order}
+                count={this.props.count}>
+        <VelocityTransitionGroup
+            {...this.props.currentCount >= this.props.order ? {
+                enter: { animation: "transition.fadeIn", stagger: 600, drag: true },
+                runOnMount: true,
+               
+            } : {}} >
             {this.props.children}
+              <VelocityComponent animation={{ opacity:this.props.currentCount >= this.props.order ? 1 : 0 }}  duration={500}>
+                    <div>fdsfsfjkhjjdfsf</div>
+                </VelocityComponent>
+        </VelocityTransitionGroup>
         </div>
     }
 }
 
-export class Frame extends React.Component<any, any>{
-    Idanimation = 0;
-    constructor(props: any, context: any) {
-        super(props, context);
-        this.state = {
-            numAnimationLeft: 0
-        }
-    }
-
-    componentDidMount = () => {
-        this.travel(this.props.children)
-    }
-
-    travel = (elem: JSX.Element) => {
-        if (!elem || !elem.props) {
-            return 0;
-        }
-        let count = elem.props.animate ? 1 : 0;;
-        if (elem.props.children == null) {
-            return count;
-        } else {
-            if (elem.props.children instanceof Array) {
-                for (let i = 0; i < elem.props.children.length; i++) {
-                    count += this.travel(elem.props.children[i]);
-                }
-            } else {
-                count += this.travel(elem.props.children);
-            }
-            return count;
-        }
-    }
-
-    myTurnToAnimate = (num: number) => {
-        return this.state.numAnimationLeft == num;
-    }
-
-    renderWithAnimation = (elem: JSX.Element): JSX.Element => {
-        if (!elem || !elem.props) {
-            return elem;
-        }
-        let child = elem.props.children;
-        if (child) {
-            if (child instanceof Array) {
-                for (let i = 0; i < child.length; i++) {
-                    if (child[i].props) {
-
-                    }
-                }
-            } else {
-                if (!child.props) {
-                    return elem;
-                }
-                if (child.props.animate) {
-                    return React.createElement(elem.type as any, elem.props, this.addVelocity(child))
-                } else {
-                    // TODO type not right?
-                    return React.createElement(elem.type as any, elem.props, this.renderWithAnimation(elem.props.children))
-                }
-            }
-        }
-    }
-
-    addVelocity = (child: JSX.Element): JSX.Element => {
-        return <VelocityComponent
-            {...{
-                animation: child.props.animate,
-                duration: child.props.duration ? child.props.duration : 500,
-                runOnMount: true
-            }}>
-            <div>
-                {child.props && this.renderWithAnimation(child.props.children)}
-                {!child.props && child}
-            </div>
-        </VelocityComponent>;
-    }
 
 
-    // renderWithAnimation = (elem: JSX.Element): JSX.Element => {
-    //     if (!elem || !elem.props) {
-    //         return elem;
-    //     }
-    //     let res: JSX.Element = null;
-    //     if (elem.props.animate) {
-    //         if (!elem.props.runOnMount) {
-    //             this.Idanimation += 1;
-    //             return <VelocityComponent
-    //                 {...this.myTurnToAnimate(this.Idanimation) ? {
-    //                     animation: elem.props.animate,
-    //                     duration: elem.props.duration ? elem.props.duration : 500,
-    //                     runOnMount: false
-    //                 } : {}} >
-    //                 <div>
-    //                     {elem.props.children.map(this.renderWithAnimation)}
-    //                 </div>
-    //             </VelocityComponent>
-    //         } else {
-    //             return <VelocityComponent
-    //                 {...{
-    //                     animation: elem.props.animate,
-    //                     duration: elem.props.duration ? elem.props.duration : 500,
-    //                     runOnMount: true
-    //                 }}>
-    //                 <div>
-    //                     {elem.props.children && (elem.props.children instanceof Array) ? elem.props.children.map(this.renderWithAnimation) : this.renderWithAnimation(elem.props.children)}
-    //                 </div>
-    //             </VelocityComponent>
-    //         }
-    //     } else {
-    //         if (elem.props.children) {
-    //             if (elem.props.children instanceof Array) {
-    //                 for (let i = 0; i < elem.props.children.length; i++) {
-    //                     elem.props.children[i] = this.renderWithAnimation(elem.props.children[i]);
-    //                 }
-    //             } else {
-    //                 try{
-    //                     elem.props.children = this.renderWithAnimation(elem.props.children);
-    //                 }catch(e){
-    //                     console.log(e)
-    //                 }
-    //             }
-    //         }
-    //         return elem;
-    //     }
-    // }
-
-    // <VelocityComponent animation={{ opacity: this.state.animate ? 1 : 0 }} runOnMount duration={500}>
-    //     <div>fdsfsfjkhjjdfsf</div>
-    //     <VelocityComponent animation={{ opacity: this.state.animate ? 1 : 0 }} runOnMount duration={500}>
-    //         <div>fdsfsfjkhjjdfsf</div>
-    //     </VelocityComponent>
-    // </VelocityComponent>
-    render() {
-        return (
-            <div>
-                {
-                    this.renderWithAnimation(
-                        <div>{this.props.children}</div>)
-                }
-            </div>
-        );
-    }
-
-    // render() {
-    //     return (
-    //         <div onClick={() => { this.setState({ animate: true }); console.log('clicked') } }>
-    //             {this.renderWithAnimation(this.props.children)}
-    //         </div>
-    //     );
-    // }
-
-}
 
 export class List extends React.Component<any, any> {
     constructor(props: any, context: any) {
@@ -276,9 +157,6 @@ export class List extends React.Component<any, any> {
         </div>
     }
 }
-
-
-
 
 export const others = (defaultProps: any = {}, props: any = {}, ignore?: string[]) => {
     let defaultPropsKeys: Array<string> = Object.keys(defaultProps)
