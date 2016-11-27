@@ -120,12 +120,12 @@ export class Frame3 extends React.Component<any, any>{
         return <div count={this.props.count}>
         <VelocityTransitionGroup
             {...this.props.Store.currentCount >= this.props.order ? {
-                enter: { animation: "transition.fadeIn", stagger: 600, drag: true },
+                enter: { animation: "transition.fadeIn", stagger: 600},
                 runOnMount: true,
                
             } : {}} >
             {this.props.children}
-              <VelocityComponent animation={{ opacity:this.props.Store.currentCount >= this.props.order ? 1 : 0 }}  duration={500}>
+              <VelocityComponent animation={{ "transition.fadeIn":this.props.Store.currentCount >= this.props.order ? 1 : 0 }}  duration={500}>
                     <div>fdsfsfjkhjjdfsf</div>
                 </VelocityComponent>
         </VelocityTransitionGroup>
