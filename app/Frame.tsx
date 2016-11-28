@@ -5,7 +5,7 @@ import * as cx from 'classnames';
 import { VelocityTransitionGroup, VelocityComponent } from 'velocity-react';
 require('velocity-animate');
 require('velocity-animate/velocity.ui');
-import { observer,inject } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 
 export class Frame extends React.Component<any, any> {
 
@@ -84,15 +84,26 @@ export const Frame2 = () => (Target: any) => {
     return func()
 }
 
+export interface Iprops {
+    count?: number;
+    order: number|Array<number>;
+    Store?: {
+        currentCount: number;
+        setCount: Function;
+    },
+    animate?: Object;
+    animateOut?: Object;
+}
+
 @inject('Store') @observer
-export class Frame3 extends React.Component<any, any>{
-    constructor(props: any, context: any) {
+export class Frame3 extends React.Component<Iprops, any>{
+    constructor(props: Iprops, context: any) {
         super(props, context);
     }
- 
-  componentWillReceiveProps(nextProps:any){
-      console.log(nextProps);
-  } 
+
+    componentWillReceiveProps(nextProps: any) {
+        console.log(nextProps);
+    }
 
     // handleKepPress = (e: any) => {
     //     switch (e.keyCode) {
@@ -117,18 +128,17 @@ export class Frame3 extends React.Component<any, any>{
     render() {
         console.log(this.props.order);
         console.log(this.props.Store.currentCount)
+        
+        let appear = this.props.Store.currentCount >= this.props.order;
+        if(typeof this.props.order == "object"){
+            appear = this.props.Store.currentCount < this.props.order[1] 
+            && this.props.Store.currentCount >= this.props.order[0];
+        }
+        console.log(this.props.animate)
         return <div count={this.props.count}>
-        <VelocityTransitionGroup
-            {...this.props.Store.currentCount >= this.props.order ? {
-                enter: { animation: "transition.fadeIn", stagger: 600},
-                runOnMount: true,
-               
-            } : {}} >
-            {this.props.children}
-              <VelocityComponent animation={{ "transition.fadeIn":this.props.Store.currentCount >= this.props.order ? 1 : 0 }}  duration={500}>
-                    <div>fdsfsfjkhjjdfsf</div>
-                </VelocityComponent>
-        </VelocityTransitionGroup>
+            <VelocityTransitionGroup  enter={this.props.animate} leave={this.props.animateOut} runOnMount={this.props.order===0} dragger>
+                {appear?this.props.children:undefined}
+            </VelocityTransitionGroup >
         </div>
     }
 }
@@ -148,7 +158,7 @@ export class List extends React.Component<any, any> {
         return <div>
             <VelocityTransitionGroup runOnMount {...animate ? { enter: { animation: "transition.fadeIn", stagger: 100, drag: true } } : {}} leave={{ animation: "fadeOut", backwards: true }}>
                 {this.props.lists.map((value: any, index: number) => {
-                    return <li className={cx({ "ul": this.props.header })} key={index}>{value}</li>
+                    return <li className={cx({ "ul": this.props.header })}  style={this.props.style} key={index}>{value}</li>
                 })}
                 {this.props.children}
             </VelocityTransitionGroup>

@@ -37,11 +37,27 @@ export default class PPT extends React.Component<Iprops, Istates> {
 
     }
 
+    componentDidMount(){
+        document.onkeydown = (e) => {
+            if(this.state.isPlaying){
+                return;
+            }else{
+                switch(e.keyCode){
+                    case 13:
+                        this.play(e)
+                    default:
+                        return;
+                }
+            }
+        };
+    }
+
     componentDidUpdate() {
         if (!this.state.isPlaying) {
             (this.refs["view"] as any).blur();
         }
     }
+
     render() {
         return (
             <Provider currentCount={this.props.Store.currentCount}>
@@ -162,6 +178,11 @@ export default class PPT extends React.Component<Iprops, Istates> {
         });
         console.log(this.refs["view"]);
         (this.refs["view"] as any).focus();
+        this.state.frameCount = this.props.content[this.state.cur].props
+            && this.props.content[this.state.cur].props.count;
+        if (this.state.frameCount == undefined) {
+            this.state.frameCount = 0;
+        }
     }
 
     stop = (e: any) => {
