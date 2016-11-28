@@ -37,14 +37,35 @@ export default class PPT extends React.Component<Iprops, Istates> {
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
         document.onkeydown = (e) => {
-            if(this.state.isPlaying){
+            if (this.state.isPlaying) {
                 return;
-            }else{
-                switch(e.keyCode){
+            } else {
+                console.log(e.keyCode)
+                switch (e.keyCode) {
                     case 13:
                         this.play(e)
+                        break;
+                    case 38:
+                    case 37:
+                        let next = this.state.cur - 1 < 0 ? 0 : this.state.cur - 1;
+                        this.setState({
+                            cur: next,
+                            forward: false
+                        });
+                        break;
+                    case 39:
+                    case 40:
+                        if(this.state.cur >= this.props.content.length - 1){
+                            break;
+                        }
+                        this.props.Store.setCount(0);
+                        this.setState({
+                            cur: this.state.cur + 1,
+                            forward: true
+                        })
+                        break;
                     default:
                         return;
                 }
@@ -227,6 +248,19 @@ export default class PPT extends React.Component<Iprops, Istates> {
         return <div className="slider">
             {
                 divs.map((value, index) => {
+                    // console.log(value)
+                    // if (value && value.props && value.props.count) {
+                    //     let newProps: any = {};
+                    //     Object.keys(value.props).forEach((key: string) => {
+                    //         if (key !== 'count') {
+                    //             newProps[key] = value.props[key];
+                    //         } else {
+                    //             newProps[key] = 1000;
+                    //         }
+                    //     })
+                    //     value = React.cloneElement(value, newProps, value.props.children)
+                    //     console.log(newProps)
+                    // }
                     return <div key={index} onClick={this.setCur.bind(this, index)} className="slider-piece">
                         <div className="dummy" />
                         <div className="slider-index"> {index + 1}</div>

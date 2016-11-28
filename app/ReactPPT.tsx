@@ -7,9 +7,15 @@ import {observable, action} from 'mobx'
 class Store{
     @observable
     currentCount = 0;
+    @observable
+    show = false;
     @action
     setCount(num:number){
         this.currentCount = num;
+    }
+    @action
+    setShow(sh:boolean){
+        this.show = sh;
     }
 }
 

@@ -54,9 +54,11 @@ let divs: Array<JSX.Element> = [
         </ul>
     </Wrapper>,
 
-      <Wrapper count={0} key={3} header={" "}>
+      <Wrapper count={1} key={3} header={" "}>
             <Frame3 order={0} animate={{ animation: "transition.bounceUpIn", duration: 500 }}>
                 <img style={{position: 'absolute', left: "0%", top:"1%"}} src="../lib/app/static/xiaobing.jpg"/>
+            </Frame3>
+            <Frame3 order={1} animate={{ animation: "transition.bounceUpIn", duration: 500 }}>
                 <img style={{position: 'absolute', left: "50%", top:"15%"}} src="../lib/app/static/xiaohuangji2.jpg"/>
             </Frame3>
     </Wrapper>,

@@ -90,6 +90,7 @@ export interface Iprops {
     Store?: {
         currentCount: number;
         setCount: Function;
+        show?: boolean;
     },
     animate?: Object;
     animateOut?: Object;
@@ -102,7 +103,7 @@ export class Frame3 extends React.Component<Iprops, any>{
     }
 
     componentWillReceiveProps(nextProps: any) {
-        console.log(nextProps);
+        // console.log(nextProps);
     }
 
     // handleKepPress = (e: any) => {
@@ -126,15 +127,15 @@ export class Frame3 extends React.Component<Iprops, any>{
     // }
 
     render() {
-        console.log(this.props.order);
-        console.log(this.props.Store.currentCount)
+        // console.log(this.props.order);
+        // console.log(this.props.Store.currentCount)
         
-        let appear = this.props.Store.currentCount >= this.props.order;
+        let appear = this.props.Store.currentCount >= this.props.order || this.props.Store.show;
         if(typeof this.props.order == "object"){
             appear = this.props.Store.currentCount < this.props.order[1] 
             && this.props.Store.currentCount >= this.props.order[0];
         }
-        console.log(this.props.animate)
+        // console.log(this.props.animate)
         return <div count={this.props.count}>
             <VelocityTransitionGroup  enter={this.props.animate} leave={this.props.animateOut} runOnMount={this.props.order===0} dragger>
                 {appear?this.props.children:undefined}
