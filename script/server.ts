@@ -8,8 +8,11 @@ app.set('views', path.join(__dirname, '../../app'));
 // views is directory for all template files
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
-
+app.get('./lib/app/static/*',function(request,response){
+        console.log(request)
+})
 app.get('/', function (request, response) {
+    console.log(request)
     response.render('index.html');
 });
 

@@ -64,10 +64,10 @@ let divs: Array<JSX.Element> = [
 
     <Wrapper count={1} key={3} header={" "}>
         <Frame3 order={0} animate={{ animation: "transition.bounceUpIn", duration: 500 }}>
-            <img style={{ position: 'absolute', left: "0%", top: "1%" }} src="../lib/app/static/xiaobing.jpg" />
+            <img style={{ position: 'absolute', left: "0%", top: "1%", height:'90%'}} src="../lib/app/static/xiaobing.jpg" />
         </Frame3>
         <Frame3 order={1} animate={{ animation: "transition.bounceUpIn", duration: 500 }}>
-            <img style={{ position: 'absolute', left: "50%", top: "15%" }} src="../lib/app/static/xiaohuangji2.jpg" />
+            <img style={{ position: 'absolute', left: "50%", top: "15%",height:'80%' }} src="../lib/app/static/xiaohuangji2.jpg" />
         </Frame3>
     </Wrapper> ,
 
@@ -131,7 +131,8 @@ let divs: Array<JSX.Element> = [
     </Wrapper> ,
     <Wrapper count={1} key={7} header={"研究现状"}>
         <ul className="list">
-            <Frame3 order={0} animate={{ animation: "transition.bounceUpIn", duration: 500, stagger: 200 }}  >
+            <Frame3 order={[0,1]} animate={{ animation: "transition.bounceUpIn", duration: 500, stagger: 200 }}
+        animateOut={{ animation: "transition.bounceUpOut", duration: 500, stagger: 200 }}  >
                 <Lists header lists={["普通递归神经网络RNN"]}>
                 </Lists>
                 <li>能充分利用时序信息，具有储存记忆能力</li>
@@ -320,10 +321,12 @@ let divs: Array<JSX.Element> = [
         </Frame3>
     </Wrapper>
     ,
-    <Wrapper count={3} key={26} header={"改进模型 LSTM-RTRBM"}>
+    <Wrapper count={1} key={26} header={"改进模型 LSTM-RTRBM"}>
         <Lists header lists={["受限玻尔兹曼机 RBM"]}>
             <Lists lists={["受物理上能量函数启发，根据能量下降方向计算梯度", "乘积专家系统(Product of Expert)，建模能力;比传统高斯混合模型这种加法平均专家系统(Mixture of Expert)，在高纬度数据建模上更有效"]} />
-            <img src='../lib/app/static/rbm.png' />
+            <Frame3 order={1} animation={{animation: "transition.bounceUpIn"}}>
+            <img src='../lib/app/static/rbm.png' style={{height:'40%', position: 'absolute', bottom: '20px', left: '40%'}}/>
+            </Frame3>
         </Lists>
     </Wrapper> ,
     <Wrapper count={3} key={26} header={"改进模型 LSTM-RTRBM"}>
@@ -338,17 +341,17 @@ let divs: Array<JSX.Element> = [
                     animateOut={{ animation: "transition.flipBounceYOut" }}   >
                     <div style={{
                         position: "absolute", left: "200px", top: '0px', width: '700px',
-                        height: '300px', border: 'solid 6px red'
+                        height: '250px', border: 'solid 6px red'
                     }}></div>
                 </Frame3>
                 <Frame3 order={3}
                     animate={{ animation: "transition.flipBounceXIn" }}   >
                     <div style={{
-                        position: "absolute", left: "20px", bottom: '0px', width: '900px',
-                        height: '200px', border: 'solid 6px red'
+                        position: "absolute", left: "20px", bottom: '0', width: '900px',
+                        height: '170px', border: 'solid 6px red'
                     }}></div>
                 </Frame3>
-                <img style={{ width: "900px", height: "500px" }} src='../lib/app/static/lstm-rtrbm.png' />
+                <img style={{ width: "900px", height: "450px"}} src='../lib/app/static/lstm-rtrbm.png' />
             </div>
         </Frame3>
     </Wrapper>
