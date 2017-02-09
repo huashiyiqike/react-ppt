@@ -1,3 +1,4 @@
+demo:https://react-ppt.herokuapp.com
 Velocity.RegisterEffect.packagedEffects = {
     /* Animate.css */
     "callout.bounce": {
